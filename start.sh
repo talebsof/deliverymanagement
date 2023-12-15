@@ -4,7 +4,6 @@ docker-compose up -d workspace postgres nginx
 docker-compose exec workspace bash
 
 //backend
-composer install
 php artisan migrate
 
 //frontend
