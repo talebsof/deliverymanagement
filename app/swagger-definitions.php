@@ -1,6 +1,5 @@
 <?php
 namespace App;
-die('File included');
 
 /**
  * @OA\Info(
