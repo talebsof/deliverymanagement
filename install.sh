@@ -11,4 +11,5 @@ docker-compose exec workspace bash
 
 # pour lancer l'application frontend
 cd resources/js/angular
+npm install
 npm run start
