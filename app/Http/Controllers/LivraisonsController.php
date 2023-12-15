@@ -7,17 +7,6 @@ use App\Models\Livraisons;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Resources\LivraisonResource;
 
-/**
- * @OA\Info(title="My First API", version="0.1")
- * @OA\Schema(
- *      schema="LivraisonResource",
- *      type="object",
- *      @OA\Property(property="id", type="integer"),
- *      @OA\Property(property="pickup_address", type="string"),
- *      @OA\Property(property="dropoff_address", type="string"),
- *      @OA\Property(property="tournee", type="object", ref="#/components/schemas/TourneeResource")
- *  )
- */
 class LivraisonsController extends Controller
 {
     /**
