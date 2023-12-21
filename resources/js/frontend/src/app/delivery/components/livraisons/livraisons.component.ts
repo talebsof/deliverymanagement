@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {DeliveryPersons, UserColumns} from "../../../core/models/delivery-persons";
 import {DeliveryPersonsService} from "../../../core/services/delivery-persons-service";
@@ -8,17 +8,22 @@ import {DeliveryPersonsService} from "../../../core/services/delivery-persons-se
   templateUrl: './livraisons.component.html',
   styleUrl: './livraisons.component.scss'
 })
-export class LivraisonsComponent {
+export class LivraisonsComponent implements OnInit{
   dataSource = new MatTableDataSource<DeliveryPersons>();
   columnsSchema: any = UserColumns;
   valid: { [id: number]: { [key: string]: boolean } } = {};
-  constructor(private userService: DeliveryPersonsService) {}
+  varPourAjouter = 'ajouter une livraison';
+  varPourSupprimer = 'supprimer de(s) livraison(s)';
+  constructor(private userService: DeliveryPersonsService) {
+
+  }
 
   ngOnInit() {
     this.userService.getDeliveryPersons().subscribe((res: any) => {
       this.dataSource.data = res;
     });
     console.log(this.dataSource.data);
+
 
   }
 

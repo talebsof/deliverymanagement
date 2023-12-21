@@ -21,7 +21,6 @@ return new class extends Migration
             $table->double('delivery_longitude', 11, 8);
             $table->string('pickup_address');
             $table->string('dropoff_address');
-            $table->foreignId('tournee_id')->constrained();
             $table->timestamps();
         });
     }

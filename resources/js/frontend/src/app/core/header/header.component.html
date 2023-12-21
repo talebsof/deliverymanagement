@@ -1,1 +1,5 @@
-<p>header works!</p>
+<div class="flex justify-center space-x-4">
+  <button *ngIf="currentRoute !== '/livreurs'" routerLink="/livreurs" class="text-center bg-white text-indigo-800 mt-4 py-2 rounded-2xl font-bold mb-2 p-4 hover:bg-blue-200">Liste de livreurs</button>
+  <button *ngIf="currentRoute !== '/tournes'" routerLink="/tournes" class="text-center bg-white text-indigo-800 mt-4 py-2 rounded-2xl font-bold mb-2 p-4 hover:bg-blue-200">Liste de tournées</button>
+  <button *ngIf="currentRoute !== '/livraisons'" routerLink="/livraisons" class="text-center bg-white text-indigo-800 mt-4 py-2 rounded-2xl font-bold mb-2 p-4 hover:bg-blue-200">Liste de livraisons</button>
+</div>

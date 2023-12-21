@@ -1,0 +1,111 @@
+<article class="table-header flex justify-center space-x-4 my-4 items-center">
+  <button (click)="removeSelectedRows.emit()" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700 flex items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white  cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+    </svg>
+    {{varPourSupprimer}}
+
+  </button>
+  <button (click)="addRow.emit()" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 flex items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+    </svg>
+    {{varPourAjouter}}
+  </button>
+
+</article>
+
+<mat-form-field appearance="fill">
+  <input matInput placeholder="search" autocomplete="off" (keyup)="emitFilterData($event)">
+</mat-form-field>
+
+<table mat-table matSort [dataSource]="dataSource" class="min-w-full divide-y divide-gray-200 shadow-sm">
+  <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
+    <th mat-header-cell  mat-sort-header *matHeaderCellDef [ngSwitch]="col.key" class="px-6 py-3 bg-gray-300 text-left text-xs leading-4 font-medium text-gray-700 uppercase tracking-wider">
+      <span *ngSwitchCase="'isSelected'">
+        <mat-checkbox
+          (change)="selectAll($event)"
+          [checked]="isAllSelected()"
+          [indeterminate]="!isAllSelected() && isAnySelected()"
+        ></mat-checkbox>
+      </span>
+      <span *ngSwitchDefault>{{ col.label }}</span>
+    </th>
+    <td mat-cell *matCellDef="let element" class="px-6 py-4 whitespace-no-wrap">
+      <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
+        <ng-container *ngSwitchCase="'isSelected'">
+          <mat-checkbox
+            (change)="element.isSelected = $event.checked"
+            [checked]="element.isSelected"
+          ></mat-checkbox>
+        </ng-container>
+        <div class="btn-edit" *ngSwitchCase="'isEdit'">
+          <button mat-button class="px-2 py-1 bg-green-500 text-white rounded flex items-center" (click)="element.isEdit = !element.isEdit">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500 hover:text-blue-700 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+            </svg>
+            Edit
+          </button>
+          <button mat-button class="px-2 py-1 bg-red-500 text-white rounded  flex items-center" (click)="emitRemoveRow(element.id)">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500 cursor-pointer hover:text-red-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+            </svg>
+            Delete
+          </button>
+        </div>
+        <span *ngSwitchCase="'date'">
+          {{ element[col.key] }}
+        </span>
+        <span *ngSwitchDefault>
+          {{ element[col.key] }}
+        </span>
+      </div>
+      <div [ngSwitch]="col.type" *ngIf="element.isEdit">
+        <div *ngSwitchCase="'isSelected'"></div>
+        <div class="btn-edit" *ngSwitchCase="'isEdit'">
+          <button
+            mat-button
+            (click)="emitEditSubmit(element)"
+            [disabled]="disableSubmit(element.id)"
+          >
+            Done
+          </button>
+        </div>
+        <mat-form-field
+          class="form-input"
+          *ngSwitchCase="'date'"
+          appearance="fill"
+        >
+          <mat-label>Choose a date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            [(ngModel)]="element[col.key]"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="form-input" *ngSwitchDefault>
+          <input
+            matInput
+            [required]="col.required"
+            [pattern]="col.pattern"
+            [type]="col.type"
+            [(ngModel)]="element[col.key]"
+            (change)="emitInputChanged($event, element.id, col.key)"
+          />
+        </mat-form-field>
+      </div>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns" class="bg-gray-300"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index" [ngClass]="i % 2 ? 'bg-white' : 'bg-gray-200'"></tr>
+</table>
+
+<mat-paginator
+  [pageSize]="10"
+  [pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>
