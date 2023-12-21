@@ -1,24 +1,19 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {DeliveryPersons, UserColumns} from "../../../core/models/delivery-persons";
-import {MatDialog} from "@angular/material/dialog";
-import {DeliveryPersonsService} from "../../../core/services/delivery-persons-service";
+import {Component, OnInit} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {MatPaginator} from "@angular/material/paginator";
-import {MatSort} from "@angular/material/sort";
-import {Subject, takeUntil} from "rxjs";
+import {DeliveryPersons, UserColumns} from "../../../core/models/delivery-persons";
+import {DeliveryPersonsService} from "../../../core/services/delivery-persons-service";
 
 @Component({
-  selector: 'app-delivery-persons',
-  templateUrl: './delivery-persons.component.html',
-  styleUrl: './delivery-persons.component.scss'
+  selector: 'app-tournes',
+  templateUrl: './tournes.component.html',
+  styleUrl: './tournes.component.scss'
 })
-export class DeliveryPersonsComponent implements OnInit{
+export class TournesComponent implements OnInit{
   dataSource = new MatTableDataSource<DeliveryPersons>();
   columnsSchema: any = UserColumns;
   valid: { [id: number]: { [key: string]: boolean } } = {};
-  varPourAjouter = 'ajouter un livreur';
-  varPourSupprimer = 'supprimer de(s) livreur(s)';
-
+  varPourAjouter = 'ajouter une tournée';
+  varPourSupprimer = 'supprimer de(s) tournée(s)';
   constructor(private userService: DeliveryPersonsService) {}
 
   ngOnInit() {
@@ -76,7 +71,4 @@ export class DeliveryPersonsComponent implements OnInit{
     }
     this.valid[id][key] = e.target.validity.valid;
   }
-
-
-
 }
