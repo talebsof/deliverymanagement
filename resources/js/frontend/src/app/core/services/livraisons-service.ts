@@ -13,18 +13,18 @@ export class LivraisonsService {
   constructor(private http: HttpClient) {
   }
 
-  getDeliveryPersons(): Observable<Livraisons[]> {
+  getLivraisons(): Observable<Livraisons[]> {
     return this.http
       .get(this.serviceUrl)
       .pipe<Livraisons[]>(map((data: any) => data.data));
   }
 
-  updateDeliveryPersons(user: Livraisons): Observable<Livraisons> {
-    return this.http.patch<Livraisons>(`${this.serviceUrl}/${user.id}`, user);
+  updateDeliveryPersons(livraison: Livraisons): Observable<Livraisons> {
+    return this.http.patch<Livraisons>(`${this.serviceUrl}/${livraison.id}`, livraison);
   }
 
-  addDeliveryPersons(user: Livraisons): Observable<Livraisons> {
-    return this.http.post<Livraisons>(`${this.serviceUrl}`, user);
+  addDeliveryPersons(livraison: Livraisons): Observable<Livraisons> {
+    return this.http.post<Livraisons>(`${this.serviceUrl}`, livraison);
   }
 
   deleteDeliveryPerson(id: number): Observable<Livraisons> {
@@ -33,8 +33,8 @@ export class LivraisonsService {
 
   deleteDeliveryPersons(users: Livraisons[]): Observable<Livraisons[]> {
     return forkJoin(
-      users.map((user) =>
-        this.http.delete<Livraisons>(`${this.serviceUrl}/${user.id}`)
+      users.map((livraison) =>
+        this.http.delete<Livraisons>(`${this.serviceUrl}/${livraison.id}`)
       )
     );
   }
@@ -42,7 +42,7 @@ export class LivraisonsService {
 
 
   getLastId(){
-    let tab =  this.getDeliveryPersons();
+    let tab =  this.getLivraisons();
     return tab.pipe(map(deliveryPerson => Math.max(...deliveryPerson.map(dp => dp.id))))
   }
 

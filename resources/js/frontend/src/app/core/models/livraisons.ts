@@ -51,7 +51,7 @@ export const UserColumns = [
 
   },
   {
-    key: 'phone_number',
+    key: 'receiver_phone',
     type: 'text',
     label: 'numéro de livreur',
     required: true

@@ -19,7 +19,7 @@ export class LivraisonsComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.userService.getDeliveryPersons().subscribe((res: any) => {
+    this.userService.getLivraisons().subscribe((res: any) => {
       this.dataSource.data = res;
     });
     console.log(this.dataSource.data);

@@ -19,12 +19,12 @@ export class TourneService{
       .pipe<Tournes[]>(map((data: any) => data.data));
   }
 
-  updateDeliveryPersons(user: Tournes): Observable<Tournes> {
-    return this.http.patch<Tournes>(`${this.serviceUrl}/${user.id}`, user);
+  updateDeliveryPersons(tourne: Tournes): Observable<Tournes> {
+    return this.http.patch<Tournes>(`${this.serviceUrl}/${tourne.id}`, tourne);
   }
 
-  addDeliveryPersons(user: Tournes): Observable<Tournes> {
-    return this.http.post<Tournes>(`${this.serviceUrl}`, user);
+  addDeliveryPersons(tourne: Tournes): Observable<Tournes> {
+    return this.http.post<Tournes>(`${this.serviceUrl}`, tourne);
   }
 
   deleteDeliveryPerson(id: number): Observable<Tournes> {
@@ -33,13 +33,11 @@ export class TourneService{
 
   deleteDeliveryPersons(users: Tournes[]): Observable<Tournes[]> {
     return forkJoin(
-      users.map((user) =>
-        this.http.delete<Tournes>(`${this.serviceUrl}/${user.id}`)
+      users.map((tourne) =>
+        this.http.delete<Tournes>(`${this.serviceUrl}/${tourne.id}`)
       )
     );
   }
-
-
 
   getLastId(){
     let tab =  this.getDeliveryPersons();

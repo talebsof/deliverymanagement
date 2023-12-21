@@ -42,7 +42,7 @@ export class DeliveryPersonsComponent implements OnInit{
       name: '',
       surname: '',
       phone_number: '',
-      status: '',
+      status: 'available|unavailable',
       isEdit: true,
       isSelected: false,
     }

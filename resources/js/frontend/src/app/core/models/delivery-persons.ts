@@ -17,27 +17,29 @@ export const UserColumns = [
   {
     key: 'name',
     type: 'text',
-    label: 'Name',
+    label: 'nom',
     required: true,
   },
   {
     key: 'surname',
     type: 'text',
-    label: 'surname',
+    label: 'surnom',
     required: true
 
   },
   {
     key: 'phone_number',
-    type: 'number',
-    label: 'phone number',
-    required: true
+    type: 'text',
+    label: 'Numéro de téléphone',
+    required: true,
+    pattern: "^\\+?[0-9]{1,15}$"
   },
   {
     key: 'status',
-    type: 'string',
-    label: 'status',
-    required: true
+    type: 'text',
+    label: 'Status',
+    required: true,
+    pattern: '^(available|unavailable)$'
   },
   {
     key: 'isEdit',
