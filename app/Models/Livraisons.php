@@ -9,10 +9,6 @@ class Livraisons extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['pickup_adress', 'dropoff_adress', 'tournee_id'];
+    protected $fillable = ['pickup_adress', 'dropoff_adress','status', 'receiver_name', 'receiver_phone', 'delivery_latitude', 'delivery_longitude' ];
 
-    public function tournees()
-    {
-        return $this->belongsTo(Tournees::class);
-    }
 }

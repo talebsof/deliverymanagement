@@ -9,15 +9,7 @@ class Tournees extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'start_date', 'end_date', 'livreur_id'];
+    protected $fillable = ['name', 'start_date', 'end_date', 'starting_point_latitude','starting_point_longitude'];
 
-    public function livreurs()
-    {
-        return $this->belongsTo(Livreurs::class, 'livreur_id');
-    }
 
-    public function livraisons()
-    {
-        return $this->hasMany(Livraisons::class);
-    }
 }
