@@ -54,13 +54,18 @@ class LivraisonsController extends Controller
 
     public function store(Request $request)
     {
+
         $validatedData = $request->validate([
-            'pickup_address' => 'required',
-            'dropoff_address' => 'required',
-            'tournee_id' => 'required|exists:tournees,id',
+           'status' => 'required',
+           'receiver_name' => 'required',
+           'receiver_phone' => 'required',
+           'delivery_latitude' => 'required',
+           'delivery_longitude' => 'required',
+           'pickup_address' => 'required',
+           'dropoff_address' => 'required',
         ]);
 
-        $livraison = Livraisons::create($validatedData);
+            $livraison = Livraisons::create($validatedData);
 
         return new LivraisonResource($livraison);
     }
@@ -121,9 +126,14 @@ class LivraisonsController extends Controller
     public function update(Request $request, Livraisons $livraison)
     {
         $validatedData = $request->validate([
+            'status' => 'required',
+            'receiver_name' => 'required',
+            'receiver_phone' => 'required',
+            'delivery_latitude' => 'required',
+            'delivery_longitude' => 'required',
             'pickup_address' => 'required',
             'dropoff_address' => 'required',
-            'tournee_id' => 'required|exists:tournees,id',
+
         ]);
 
         $livraison->update($validatedData);

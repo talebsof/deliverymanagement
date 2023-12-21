@@ -27,10 +27,3 @@ Route::apiResource('livreurs', LivreursController::class);
 // Tournees Routes
 Route::apiResource('tournees', TourneesController::class);
 
-Route::post('/register', [Controller::class, 'register']);
-Route::post('/login', [Controller::class, 'login']);
-Route::middleware('auth:sanctum')->post('/logout', [Controller::class, 'logout']);
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});

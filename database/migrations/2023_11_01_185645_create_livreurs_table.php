@@ -17,8 +17,10 @@ return new class extends Migration
             $table->string('surname');
             $table->string('phone_number');
             $table->enum('status', ['available', 'unavailable'])->default('unavailable');
+            $table->timestamps();
         });
-        DB::statement('ALTER TABLE livreurs ADD CONSTRAINT check_phone_number CHECK (phone_number ~ E\'^\+?[0-9]{1,15}$\')');
+        DB::statement("ALTER TABLE livreurs ADD CONSTRAINT check_phone_number CHECK (phone_number ~ E'^\\\\+?[0-9]{1,15}$')");
+
 
     }
 

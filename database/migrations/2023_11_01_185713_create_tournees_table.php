@@ -17,6 +17,7 @@ return new class extends Migration
             $table->double('starting_point_longitude', 11, 8);
             $table->date('start_date');
             $table->date('end_date');
+            $table->timestamps();
         });
         DB::statement('ALTER TABLE tournees ADD CONSTRAINT check_end_date_after_start_date CHECK (end_date > start_date)');
     }

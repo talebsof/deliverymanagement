@@ -16,9 +16,13 @@ class LivraisonResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'pickup_address' => $this->pickup_address, // Assuming there's a field like this
-            'dropoff_address' => $this->dropoff_address, // Assuming there's a field like this
-            'tournee' => new TourneeResource($this->whenLoaded('tournee'))
+            'pickup_address' => $this->pickup_address,
+            'dropoff_address' => $this->dropoff_address,
+            'status' => $this->status,
+            'receiver_name' => $this->receiver_name,
+            'receiver_phone' => $this->receiver_phone,
+            'delivery_latitude' => $this->delivery_latitude,
+            'delivery_longitude' => $this->delivery_longitude,
         ];
     }
 }

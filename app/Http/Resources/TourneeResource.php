@@ -16,11 +16,11 @@ class TourneeResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
-            'livreur_id' => $this->livreur_id,
-            'livraisons' => LivraisonResource::collection($this->whenLoaded('livraisons'))
+            'starting_point_latitude' => $this->starting_point_latitude,
+            'starting_point_longitude' => $this->starting_point_longitude,
+
         ];
     }
 }

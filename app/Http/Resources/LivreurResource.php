@@ -20,7 +20,6 @@ class LivreurResource extends JsonResource
             'surname' => $this->surname,
             'phone_number' => $this->phone_number,
             'status' => $this->status,
-            'tournees' => TourneeResource::collection($this->whenLoaded('tournees'))
         ];
     }
 }

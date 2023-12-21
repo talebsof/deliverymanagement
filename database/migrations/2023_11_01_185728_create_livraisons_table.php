@@ -18,10 +18,11 @@ return new class extends Migration
             $table->string('receiver_phone');
             $table->double('delivery_latitude', 10, 8);
             $table->double('delivery_longitude', 11, 8);
-            $table->string('pickup_address');
+            $table->string('pickup_address')->nullable(false);
             $table->string('dropoff_address');
+            $table->timestamps();
         });
-        DB::statement('ALTER TABLE livraisons ADD CONSTRAINT check_receiver_phone CHECK (receiver_phone ~ E\'^\+?[0-9]{1,15}$\')');
+        DB::statement("ALTER TABLE livraisons ADD CONSTRAINT check_receiver_phone CHECK (receiver_phone ~ E'^\\\\+?[0-9]{1,15}$')");
 
     }
 

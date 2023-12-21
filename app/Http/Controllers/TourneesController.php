@@ -51,10 +51,10 @@ class TourneesController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after:start_date',
-            'livreur_id' => 'required|exists:livreurs,id',
+            'starting_point_longitude' => 'required',
+            'starting_point_latitude' => 'required'
         ]);
 
         $tournee = Tournees::create($validatedData);
@@ -118,10 +118,10 @@ class TourneesController extends Controller
     public function update(Request $request, Tournees $tournee)
     {
         $validatedData = $request->validate([
-            'name' => 'required',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after:start_date',
-            'livreur_id' => 'required|exists:livreurs,id',
+            'starting_point_longitude' => 'required',
+            'starting_point_latitude' => 'required'
         ]);
 
         $tournee->update($validatedData);
