@@ -1,40 +1,42 @@
 export interface Tournes {
   isSelected: boolean;
   id: number;
-  name: string;
-  surname: string;
-  phone_number: string;
-  status: string;
+  start_date: string;
+  end_date: string;
+  starting_point_latitude: number;
+  starting_point_longitude: number;
   isEdit: boolean;
 }
-
 export const UserColumns = [
   {
     key: 'isSelected',
     type: 'isSelected',
     label: '',
   },
+
+
   {
-    key: 'name',
-    type: 'text',
-    label: 'Name',
+    key: 'start_date',
+    type: 'string',
+    label: 'Date de démarrage',
     required: true,
   },
   {
-    key: 'surname',
-    type: 'text',
-    label: 'surname',
-  },
-  {
-    key: 'phone_number',
-    type: 'text',
-    label: 'phone number',
+    key: 'end_date',
+    type: 'string',
+    label: 'Date de fin',
     required: true
   },
   {
-    key: 'status',
-    type: 'string',
-    label: 'status',
+    key: 'starting_point_latitude',
+    type: 'number',
+    label: 'l\altitude de point de démarrage',
+    required: true
+  },
+  {
+    key: 'starting_point_longitude',
+    type: 'number',
+    label: 'longitude de point de démarrage',
   },
   {
     key: 'isEdit',

@@ -1,23 +1,23 @@
 import {Component, OnInit} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {DeliveryPersons, UserColumns} from "../../../core/models/delivery-persons";
-import {DeliveryPersonsService} from "../../../core/services/delivery-persons-service";
-
+import {Tournes,UserColumns} from "../../../core/models/tournes";
+import {TourneService} from "../../../core/services/tourne-service";
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-tournes',
   templateUrl: './tournes.component.html',
   styleUrl: './tournes.component.scss'
 })
 export class TournesComponent implements OnInit{
-  dataSource = new MatTableDataSource<DeliveryPersons>();
+  dataSource = new MatTableDataSource<Tournes>();
   columnsSchema: any = UserColumns;
   valid: { [id: number]: { [key: string]: boolean } } = {};
   varPourAjouter = 'ajouter une tournée';
   varPourSupprimer = 'supprimer de(s) tournée(s)';
-  constructor(private userService: DeliveryPersonsService) {}
+  constructor(private tourneService: TourneService,private datePipe: DatePipe) {}
 
   ngOnInit() {
-    this.userService.getDeliveryPersons().subscribe((res: any) => {
+    this.tourneService.getDeliveryPersons().subscribe((res: any) => {
       this.dataSource.data = res;
     });
     console.log(this.dataSource.data);
@@ -25,42 +25,44 @@ export class TournesComponent implements OnInit{
   }
 
   removeSelectedRows() {
-    const users = this.dataSource.data.filter((u: DeliveryPersons) => u.isSelected);
-    this.userService.deleteDeliveryPersons(users)
+    const users = this.dataSource.data.filter((u: Tournes) => u.isSelected);
+    this.tourneService.deleteDeliveryPersons(users)
       .subscribe(()=> this.dataSource.data = this.dataSource.data.filter(
-        (u: DeliveryPersons) => !u.isSelected,
+        (u: Tournes) => !u.isSelected,
       ));
   }
   addRow() {
-    const newRow: DeliveryPersons = {
+
+    const newRow: Tournes = {
       id: 0,
-      name: '',
-      surname: '',
-      phone_number: '',
-      status: '',
+      start_date: this.formatDate(new Date()),
+      end_date: this.formatDate(new Date()),
+      starting_point_latitude: 0,
+      starting_point_longitude: 0,
       isEdit: true,
       isSelected: false,
     }
+
     this.dataSource.data = [newRow, ...this.dataSource.data]
   }
 
-  editRow(deleveryPerson: DeliveryPersons) {
+  editRow(deleveryPerson: Tournes) {
     if (deleveryPerson.id === 0) {
-      this.userService.addDeliveryPersons(deleveryPerson).subscribe((newDeliveryPersons: DeliveryPersons) => {
-        deleveryPerson.id = newDeliveryPersons.id;
+      this.tourneService.addDeliveryPersons(deleveryPerson).subscribe((newTourneService: Tournes) => {
+        deleveryPerson.id = newTourneService.id;
         deleveryPerson.isEdit = false;
       });
     } else {
-      this.userService.updateDeliveryPersons(deleveryPerson).subscribe(() => {
+      this.tourneService.updateDeliveryPersons(deleveryPerson).subscribe(() => {
         deleveryPerson.isEdit = false;
       });
     }
   }
 
   removeRow(id: number) {
-    this.userService.deleteDeliveryPerson(id).subscribe(() => {
+    this.tourneService.deleteDeliveryPerson(id).subscribe(() => {
       this.dataSource.data = this.dataSource.data.filter(
-        (u: DeliveryPersons) => u.id !== id,
+        (u: Tournes) => u.id !== id,
       )
     })
   }
@@ -70,5 +72,8 @@ export class TournesComponent implements OnInit{
       this.valid[id] = {};
     }
     this.valid[id][key] = e.target.validity.valid;
+  }
+  formatDate(date: Date): string {
+    return <string>this.datePipe.transform(date, 'yyyy-MM-dd');
   }
 }

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
 import { DeliveryRoutingModule } from './delivery-routing.module';
 import {DeliveryPersonsComponent} from "./components/delivery-persons/delivery-persons.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -50,6 +50,9 @@ import {HeaderComponent} from "../core/header/header.component";
   exports: [
     DeliveryPersonsComponent,
     HeaderComponent,
+  ],
+  providers: [
+    DatePipe
   ]
 })
 export class DeliveryModule { }

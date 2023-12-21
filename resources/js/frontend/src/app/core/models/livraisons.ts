@@ -1,12 +1,20 @@
 export interface Livraisons {
   isSelected: boolean;
   id: number;
-  name: string;
-  surname: string;
-  phone_number: string;
+  pickup_address: string;
+  dropoff_address : string;
   status: string;
+  receiver_name: string;
+  receiver_phone: string;
+  delivery_latitude: number;
+  delivery_longitude: number;
   isEdit: boolean;
 }
+
+
+
+
+
 
 export const UserColumns = [
   {
@@ -15,26 +23,53 @@ export const UserColumns = [
     label: '',
   },
   {
-    key: 'name',
+    key: 'pickup_address',
     type: 'text',
-    label: 'Name',
+    label: 'Adresse de récupération',
     required: true,
   },
   {
-    key: 'surname',
+    key: 'dropoff_address',
     type: 'text',
-    label: 'surname',
-  },
-  {
-    key: 'phone_number',
-    type: 'text',
-    label: 'phone number',
+    label: 'Adresse de livraison',
     required: true
+
   },
   {
     key: 'status',
     type: 'string',
     label: 'status',
+    required: true
+
+  },
+
+  {
+    key: 'receiver_name',
+    type: 'string',
+    label: 'Nom de livreur',
+    required: true
+
+  },
+  {
+    key: 'phone_number',
+    type: 'text',
+    label: 'numéro de livreur',
+    required: true
+  },
+
+  {
+    key: 'delivery_latitude',
+    type: 'string',
+    label: 'l\'altitude de livraison',
+    required: true
+
+  },
+  {
+    key: 'delivery_longitude',
+    type: 'string',
+    label: 'longitude de livraison',
+    required: true
+
   },
   {
     key: 'isEdit',

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {DeliveryPersons, UserColumns} from "../../../core/models/delivery-persons";
-import {DeliveryPersonsService} from "../../../core/services/delivery-persons-service";
+import {Livraisons, UserColumns} from "../../../core/models/livraisons";
+import {LivraisonsService} from "../../../core/services/livraisons-service";
 
 @Component({
   selector: 'app-livraisons',
@@ -9,12 +9,12 @@ import {DeliveryPersonsService} from "../../../core/services/delivery-persons-se
   styleUrl: './livraisons.component.scss'
 })
 export class LivraisonsComponent implements OnInit{
-  dataSource = new MatTableDataSource<DeliveryPersons>();
+  dataSource = new MatTableDataSource<Livraisons>();
   columnsSchema: any = UserColumns;
   valid: { [id: number]: { [key: string]: boolean } } = {};
   varPourAjouter = 'ajouter une livraison';
   varPourSupprimer = 'supprimer de(s) livraison(s)';
-  constructor(private userService: DeliveryPersonsService) {
+  constructor(private userService: LivraisonsService) {
 
   }
 
@@ -28,29 +28,32 @@ export class LivraisonsComponent implements OnInit{
   }
 
   removeSelectedRows() {
-    const users = this.dataSource.data.filter((u: DeliveryPersons) => u.isSelected);
+    const users = this.dataSource.data.filter((u: Livraisons) => u.isSelected);
     this.userService.deleteDeliveryPersons(users)
       .subscribe(()=> this.dataSource.data = this.dataSource.data.filter(
-        (u: DeliveryPersons) => !u.isSelected,
+        (u: Livraisons) => !u.isSelected,
       ));
   }
   addRow() {
-    const newRow: DeliveryPersons = {
+    const newRow: Livraisons = {
       id: 0,
-      name: '',
-      surname: '',
-      phone_number: '',
+      pickup_address: '',
+      dropoff_address: '',
       status: '',
+      receiver_name: '',
+      receiver_phone:'',
+      delivery_latitude:0,
+      delivery_longitude:0,
       isEdit: true,
       isSelected: false,
     }
     this.dataSource.data = [newRow, ...this.dataSource.data]
   }
 
-  editRow(deleveryPerson: DeliveryPersons) {
+  editRow(deleveryPerson: Livraisons) {
     if (deleveryPerson.id === 0) {
-      this.userService.addDeliveryPersons(deleveryPerson).subscribe((newDeliveryPersons: DeliveryPersons) => {
-        deleveryPerson.id = newDeliveryPersons.id;
+      this.userService.addDeliveryPersons(deleveryPerson).subscribe((newLivraisons: Livraisons) => {
+        deleveryPerson.id = newLivraisons.id;
         deleveryPerson.isEdit = false;
       });
     } else {
@@ -63,7 +66,7 @@ export class LivraisonsComponent implements OnInit{
   removeRow(id: number) {
     this.userService.deleteDeliveryPerson(id).subscribe(() => {
       this.dataSource.data = this.dataSource.data.filter(
-        (u: DeliveryPersons) => u.id !== id,
+        (u: Livraisons) => u.id !== id,
       )
     })
   }

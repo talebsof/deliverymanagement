@@ -2,38 +2,39 @@ import { Injectable } from "@angular/core";
 import {forkJoin, map, Observable} from "rxjs";
 import {DeliveryPersons} from "../models/delivery-persons";
 import {HttpClient} from "@angular/common/http";
+import {Tournes} from "../models/tournes";
 
 @Injectable({
   providedIn: 'root',
 })
-export class TourneServiceService {
-  private serviceUrl = 'http://127.0.0.1:8000/api/livreurs';
+export class TourneService{
+  private serviceUrl = 'http://127.0.0.1:8000/api/tournees';
 
   constructor(private http: HttpClient) {
   }
 
-  getDeliveryPersons(): Observable<DeliveryPersons[]> {
+  getDeliveryPersons(): Observable<Tournes[]> {
     return this.http
       .get(this.serviceUrl)
-      .pipe<DeliveryPersons[]>(map((data: any) => data.data));
+      .pipe<Tournes[]>(map((data: any) => data.data));
   }
 
-  updateDeliveryPersons(user: DeliveryPersons): Observable<DeliveryPersons> {
-    return this.http.patch<DeliveryPersons>(`${this.serviceUrl}/${user.id}`, user);
+  updateDeliveryPersons(user: Tournes): Observable<Tournes> {
+    return this.http.patch<Tournes>(`${this.serviceUrl}/${user.id}`, user);
   }
 
-  addDeliveryPersons(user: DeliveryPersons): Observable<DeliveryPersons> {
-    return this.http.post<DeliveryPersons>(`${this.serviceUrl}`, user);
+  addDeliveryPersons(user: Tournes): Observable<Tournes> {
+    return this.http.post<Tournes>(`${this.serviceUrl}`, user);
   }
 
-  deleteDeliveryPerson(id: number): Observable<DeliveryPersons> {
-    return this.http.delete<DeliveryPersons>(`${this.serviceUrl}/${id}`);
+  deleteDeliveryPerson(id: number): Observable<Tournes> {
+    return this.http.delete<Tournes>(`${this.serviceUrl}/${id}`);
   }
 
-  deleteDeliveryPersons(users: DeliveryPersons[]): Observable<DeliveryPersons[]> {
+  deleteDeliveryPersons(users: Tournes[]): Observable<Tournes[]> {
     return forkJoin(
       users.map((user) =>
-        this.http.delete<DeliveryPersons>(`${this.serviceUrl}/${user.id}`)
+        this.http.delete<Tournes>(`${this.serviceUrl}/${user.id}`)
       )
     );
   }

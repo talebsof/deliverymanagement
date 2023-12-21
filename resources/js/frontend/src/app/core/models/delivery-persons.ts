@@ -24,6 +24,8 @@ export const UserColumns = [
     key: 'surname',
     type: 'text',
     label: 'surname',
+    required: true
+
   },
   {
     key: 'phone_number',
@@ -35,6 +37,7 @@ export const UserColumns = [
     key: 'status',
     type: 'string',
     label: 'status',
+    required: true
   },
   {
     key: 'isEdit',

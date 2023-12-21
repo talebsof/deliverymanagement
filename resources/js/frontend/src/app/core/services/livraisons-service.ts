@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import {forkJoin, map, Observable} from "rxjs";
 import {DeliveryPersons} from "../models/delivery-persons";
 import {HttpClient} from "@angular/common/http";
+import {Livraisons} from "../models/livraisons";
 
 @Injectable({
   providedIn: 'root',
@@ -12,28 +13,28 @@ export class LivraisonsService {
   constructor(private http: HttpClient) {
   }
 
-  getDeliveryPersons(): Observable<DeliveryPersons[]> {
+  getDeliveryPersons(): Observable<Livraisons[]> {
     return this.http
       .get(this.serviceUrl)
-      .pipe<DeliveryPersons[]>(map((data: any) => data.data));
+      .pipe<Livraisons[]>(map((data: any) => data.data));
   }
 
-  updateDeliveryPersons(user: DeliveryPersons): Observable<DeliveryPersons> {
-    return this.http.patch<DeliveryPersons>(`${this.serviceUrl}/${user.id}`, user);
+  updateDeliveryPersons(user: Livraisons): Observable<Livraisons> {
+    return this.http.patch<Livraisons>(`${this.serviceUrl}/${user.id}`, user);
   }
 
-  addDeliveryPersons(user: DeliveryPersons): Observable<DeliveryPersons> {
-    return this.http.post<DeliveryPersons>(`${this.serviceUrl}`, user);
+  addDeliveryPersons(user: Livraisons): Observable<Livraisons> {
+    return this.http.post<Livraisons>(`${this.serviceUrl}`, user);
   }
 
-  deleteDeliveryPerson(id: number): Observable<DeliveryPersons> {
-    return this.http.delete<DeliveryPersons>(`${this.serviceUrl}/${id}`);
+  deleteDeliveryPerson(id: number): Observable<Livraisons> {
+    return this.http.delete<Livraisons>(`${this.serviceUrl}/${id}`);
   }
 
-  deleteDeliveryPersons(users: DeliveryPersons[]): Observable<DeliveryPersons[]> {
+  deleteDeliveryPersons(users: Livraisons[]): Observable<Livraisons[]> {
     return forkJoin(
       users.map((user) =>
-        this.http.delete<DeliveryPersons>(`${this.serviceUrl}/${user.id}`)
+        this.http.delete<Livraisons>(`${this.serviceUrl}/${user.id}`)
       )
     );
   }
