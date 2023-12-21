@@ -4,7 +4,6 @@ git submodule update
 cd laradock
 
 
-<<<<<<< HEAD
  docker-compose build workspace postgres nginx php-fpm
  docker-compose up -d workspace postgres nginx
  docker-compose exec workspace bash
@@ -12,6 +11,7 @@ cd laradock
 
 
 # pour lancer l'application frontend
-cd resources/js/angular
+cd resources/js/frontend
 npm install
-npm run start
+npm install --save-dev @angular-devkit/build-angular@latest
+npm start -- --host 0.0.0.0
