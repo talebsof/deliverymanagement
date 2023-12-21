@@ -1,0 +1,11 @@
+<app-generic-table
+  [dataInput]="dataSource.data"
+  [columnsSchema]="columnsSchema"
+  (addRow)="addRow()"
+  (removeSelectedRows)="removeSelectedRows()"
+  [validationState]="valid"
+  (editSubmit)="editRow($event)"
+  (removeRow)="removeRow($event)"
+  (inputChanged)="inputHandler($event.event, $event.id, $event.key)">
+
+</app-generic-table>
