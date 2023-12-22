@@ -23,5 +23,5 @@ RUN composer install --no-interaction --no-plugins --no-scripts --prefer-dist
 RUN chown -R www-data:www-data /var/www/html
 
 # Expose port 80
-EXPOSE 8088
+EXPOSE 8000
 
