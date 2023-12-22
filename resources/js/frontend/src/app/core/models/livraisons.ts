@@ -12,6 +12,9 @@ export interface Livraisons {
 }
 
 
+export interface ApiResponse<Livraisons> {
+  data: Livraisons;
+}
 
 
 
@@ -39,7 +42,9 @@ export const UserColumns = [
     key: 'status',
     type: 'string',
     label: 'status',
-    required: true
+    required: true,
+    pattern: '^(pending|completed|cancelled)$'
+
 
   },
 

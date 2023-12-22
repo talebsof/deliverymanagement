@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import {CommonModule, DatePipe} from '@angular/common';
 import { DeliveryRoutingModule } from './delivery-routing.module';
-import {DeliveryPersonsComponent} from "./components/delivery-persons/delivery-persons.component";
+import {LivreursComponent} from "./components/livreurs/livreurs.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatTableModule} from "@angular/material/table";
 import {MatButtonModule} from "@angular/material/button";
@@ -23,16 +23,14 @@ import {HeaderComponent} from "../core/header/header.component";
 
 @NgModule({
   declarations: [
-    DeliveryPersonsComponent,
+    LivreursComponent,
     GenericTableComponent,
     LivraisonsComponent,
-    TournesComponent,
-    HeaderComponent
+    TournesComponent
   ],
   imports: [
     CommonModule,
     DeliveryRoutingModule,
-    BrowserAnimationsModule,
     MatTableModule,
     MatInputModule,
     MatButtonModule,
@@ -48,11 +46,13 @@ import {HeaderComponent} from "../core/header/header.component";
     MatInputModule,
   ],
   exports: [
-    DeliveryPersonsComponent,
-    HeaderComponent,
+    LivreursComponent,
+    LivraisonsComponent,
+    TournesComponent,
+    GenericTableComponent
   ],
   providers: [
-    DatePipe
+
   ]
 })
 export class DeliveryModule { }

@@ -1,0 +1,74 @@
+.table-header {
+  // Styles for your table header
+}
+
+.min-w-full {
+  min-width: 100%;
+}
+
+.divide-y {
+  border-top-style: solid;
+  border-bottom-style: solid;
+}
+
+.divide-gray-200 {
+  border-color: #edf2f7; // This is the equivalent of Tailwind's gray-200
+}
+
+.shadow-sm {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.px-6 {
+  padding-left: 1.5rem; // 24px
+  padding-right: 1.5rem; // 24px
+}
+
+.py-3 {
+  padding-top: 0.75rem; // 12px
+  padding-bottom: 0.75rem; // 12px
+}
+
+.bg-gray-300 {
+  background-color: #e2e8f0; // This is the equivalent of Tailwind's gray-300
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-xs {
+  font-size: 0.75rem; // 12px
+}
+
+.leading-4 {
+  line-height: 1rem; // 16px
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.text-gray-700 {
+  color: #4a5568; // This is the equivalent of Tailwind's gray-700
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.tracking-wider {
+  letter-spacing: 0.05em;
+}
+
+.whitespace-no-wrap {
+  white-space: nowrap;
+}
+
+.bg-white {
+  background-color: #ffffff;
+}
+
+.bg-gray-200 {
+  background-color: #edf2f7; // This is the equivalent of Tailwind's gray-200
+}

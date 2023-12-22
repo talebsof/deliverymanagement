@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {Livraisons, UserColumns} from "../../../core/models/livraisons";
 import {LivraisonsService} from "../../../core/services/livraisons-service";
+import {ApiResponse} from "../../../core/models/tournes";
 
 @Component({
   selector: 'app-livraisons',
@@ -29,7 +30,7 @@ export class LivraisonsComponent implements OnInit{
 
   removeSelectedRows() {
     const users = this.dataSource.data.filter((u: Livraisons) => u.isSelected);
-    this.userService.deleteDeliveryPersons(users)
+    this.userService.deleteLivraisons(users)
       .subscribe(()=> this.dataSource.data = this.dataSource.data.filter(
         (u: Livraisons) => !u.isSelected,
       ));
@@ -39,7 +40,7 @@ export class LivraisonsComponent implements OnInit{
       id: 0,
       pickup_address: '',
       dropoff_address: '',
-      status: '',
+      status: 'pending',
       receiver_name: '',
       receiver_phone:'',
       delivery_latitude:0,
@@ -52,19 +53,20 @@ export class LivraisonsComponent implements OnInit{
 
   editRow(deleveryPerson: Livraisons) {
     if (deleveryPerson.id === 0) {
-      this.userService.addDeliveryPersons(deleveryPerson).subscribe((newLivraisons: Livraisons) => {
-        deleveryPerson.id = newLivraisons.id;
+      this.userService.addLivraisons(deleveryPerson).subscribe((response: ApiResponse<Livraisons>) => {
+        const newLivraison = response.data;
+        deleveryPerson.id = newLivraison.id;
         deleveryPerson.isEdit = false;
-      });
+      })
     } else {
-      this.userService.updateDeliveryPersons(deleveryPerson).subscribe(() => {
+      this.userService.updateLivraisons(deleveryPerson).subscribe(() => {
         deleveryPerson.isEdit = false;
       });
     }
   }
 
   removeRow(id: number) {
-    this.userService.deleteDeliveryPerson(id).subscribe(() => {
+    this.userService.deleteLivraison(id).subscribe(() => {
       this.dataSource.data = this.dataSource.data.filter(
         (u: Livraisons) => u.id !== id,
       )

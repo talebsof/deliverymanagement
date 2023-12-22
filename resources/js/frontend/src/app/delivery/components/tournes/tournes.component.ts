@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, LOCALE_ID, OnInit} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {Tournes,UserColumns} from "../../../core/models/tournes";
+import {ApiResponse, Tournes, UserColumns} from "../../../core/models/tournes";
 import {TourneService} from "../../../core/services/tourne-service";
 import { DatePipe } from '@angular/common';
 @Component({
@@ -14,10 +14,10 @@ export class TournesComponent implements OnInit{
   valid: { [id: number]: { [key: string]: boolean } } = {};
   varPourAjouter = 'ajouter une tournée';
   varPourSupprimer = 'supprimer de(s) tournée(s)';
-  constructor(private tourneService: TourneService,private datePipe: DatePipe) {}
+  constructor(private tourneService: TourneService) {}
 
   ngOnInit() {
-    this.tourneService.getDeliveryPersons().subscribe((res: any) => {
+    this.tourneService.getTrounes().subscribe((res: any) => {
       this.dataSource.data = res;
     });
     console.log(this.dataSource.data);
@@ -26,7 +26,7 @@ export class TournesComponent implements OnInit{
 
   removeSelectedRows() {
     const users = this.dataSource.data.filter((u: Tournes) => u.isSelected);
-    this.tourneService.deleteDeliveryPersons(users)
+    this.tourneService.deleteTrounes(users)
       .subscribe(()=> this.dataSource.data = this.dataSource.data.filter(
         (u: Tournes) => !u.isSelected,
       ));
@@ -35,8 +35,8 @@ export class TournesComponent implements OnInit{
 
     const newRow: Tournes = {
       id: 0,
-      start_date: this.formatDate(new Date()),
-      end_date: this.formatDate(new Date()),
+      start_date: '2023-12-15',
+      end_date: '2023-12-16',
       starting_point_latitude: 0,
       starting_point_longitude: 0,
       isEdit: true,
@@ -48,19 +48,20 @@ export class TournesComponent implements OnInit{
 
   editRow(deleveryPerson: Tournes) {
     if (deleveryPerson.id === 0) {
-      this.tourneService.addDeliveryPersons(deleveryPerson).subscribe((newTourneService: Tournes) => {
-        deleveryPerson.id = newTourneService.id;
+      this.tourneService.addTrounes(deleveryPerson).subscribe((response: ApiResponse<Tournes>) => {
+        const newTroune = response.data;
+        deleveryPerson.id = newTroune.id;
         deleveryPerson.isEdit = false;
-      });
+      })
     } else {
-      this.tourneService.updateDeliveryPersons(deleveryPerson).subscribe(() => {
+      this.tourneService.updateTrounes(deleveryPerson).subscribe(() => {
         deleveryPerson.isEdit = false;
       });
     }
   }
 
   removeRow(id: number) {
-    this.tourneService.deleteDeliveryPerson(id).subscribe(() => {
+    this.tourneService.deleteTroune(id).subscribe(() => {
       this.dataSource.data = this.dataSource.data.filter(
         (u: Tournes) => u.id !== id,
       )
@@ -73,7 +74,5 @@ export class TournesComponent implements OnInit{
     }
     this.valid[id][key] = e.target.validity.valid;
   }
-  formatDate(date: Date): string {
-    return <string>this.datePipe.transform(date, 'yyyy-MM-dd');
-  }
+
 }

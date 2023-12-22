@@ -7,6 +7,12 @@ export interface Tournes {
   starting_point_longitude: number;
   isEdit: boolean;
 }
+
+
+export interface ApiResponse<Tournes> {
+  data: Tournes;
+}
+
 export const UserColumns = [
   {
     key: 'isSelected',
@@ -20,12 +26,15 @@ export const UserColumns = [
     type: 'string',
     label: 'Date de démarrage',
     required: true,
+    pattern:"^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+
   },
   {
     key: 'end_date',
     type: 'string',
     label: 'Date de fin',
-    required: true
+    required: true,
+    pattern:"^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
   },
   {
     key: 'starting_point_latitude',
